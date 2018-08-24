@@ -1,59 +1,46 @@
-window.onload = function(){
-  document.querySelector("#prev").addEventListener("click",function(){prev()});
-  document.querySelector("#next").addEventListener("click",function(){next()});
-  document.querySelector("#today").addEventListener("click",function(){todaysMonth()});
-  let today = new Date();
-  let currentMonth = today.getMonth();
-  let currentYear = today.getFullYear();
-
-  let months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-
-  console.log(months[currentMonth]);
-
-  showCalendar(currentMonth,currentYear);
-
-  function next() {
-    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
-    currentMonth = (currentMonth + 1) % 12;
-    showCalendar(currentMonth, currentYear);
+class Calendar {
+  constructor(month,year) {
+    this.month = month;
+    this.year = year;
   }
 
-  function prev() {
-    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    showCalendar(currentMonth, currentYear);
+  get months(){
+      return ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   }
 
-  function todaysMonth(){
-    let today = new Date();
-    let todayMonth = today.getMonth();
-    let todayYear = today.getFullYear();
-    showCalendar(todayMonth,todayYear);
+  prev(){
+    this.year = (this.month === 0) ? this.year - 1 : this.year;
+    this.month = (this.month === 0) ? 11 : this.month - 1;
+    this.showCalendar(this.month, this.year);
   }
 
-  function showCalendar(month,year){
-    let firstDay = (new Date(year,month)).getDay();
-    let prevMonth = month - 1;
-    let prevMonthDays = daysInMonth(prevMonth, year);
+  next(){
+    this.year = (this.month === 11) ? this.year + 1 : this.year;
+    this.month = (this.month + 1) % 12;
+    this.showCalendar(this.month, this.year);
+  }
+
+  showCalendar(){
+    let firstDay = (new Date(this.year,this.month)).getDay();
+    let prevMonth = this.month - 1;
+    let prevMonthFirstDay = this.daysInMonth(prevMonth, this.year);
+
     let fecha = document.querySelector(".fecha");
-    fecha.innerHTML = months[month]+ ", "+year;
+    fecha.innerHTML = this.months[this.month]+ ", "+this.year;
+
     //body of the table
     let tbl = document.querySelector("#calendar-body");
 
     //add blankspace
     tbl.innerHTML = "";
-    console.log("days in month: "+daysInMonth(month,year));
-    console.log("start of day: "+firstDay);
-    console.log("Prev Month Days: "+prevMonthDays);
+
     //creating all cells
     let date = 1;
-    let prevDate = prevMonthDays - (firstDay-1);
+    let prevDate = prevMonthFirstDay - (firstDay-1);
     let nextDate = 1;
 
-    console.log("Prev Month start date: "+prevDate);
     for(let i = 0; i < 6; i++){
       let row = document.createElement("tr");
-
       //creating individual cells, filing them up with data.
       for(let j = 0; j < 7; j++){
         if(i === 0 && j < firstDay){
@@ -63,7 +50,7 @@ window.onload = function(){
           cell.appendChild(cellText);
           row.appendChild(cell);
           prevDate++;
-        }else if(date > daysInMonth(month,year)){
+        }else if(date > this.daysInMonth(this.month,this.year)){
           let cell = document.createElement("td");
           let cellText = document.createTextNode(nextDate);
           cell.setAttribute('class', 'next-month');
@@ -83,7 +70,11 @@ window.onload = function(){
     }
   }
 
-  function daysInMonth(iMonth, iYear) {
+  printData(){
+
+  }
+
+  daysInMonth(iMonth, iYear){
     return 32 - new Date(iYear, iMonth, 32).getDate();
   }
-};
+}
