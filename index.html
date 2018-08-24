@@ -27,7 +27,19 @@
 
       </tbody>
     </table>
-    <script type="text/javascript" src="/js/calendar.js"></script>
+    <script type="text/javascript" src="/js/oop.js"></script>
+    <!--<script type="text/javascript" src="/js/calendar.js"></script>-->
+    <script type="text/javascript">
+
+      let date = new Date();
+      let month = date.getMonth();
+      let year = date.getFullYear();
+      let cal = new Calendar(month,year);
+      cal.showCalendar();
+      document.querySelector("#prev").addEventListener("click",function(){cal.prev()});
+      document.querySelector("#next").addEventListener("click",function(){cal.next()});
+      document.querySelector("#today").addEventListener("click",function(){todaysMonth()});
+    </script>
   </body>
 </html>
 <!--  https://medium.com/@nitinpatel_20236/challenge-of-building-a-calendar-with-pure-javascript-a86f1303267d  -->
