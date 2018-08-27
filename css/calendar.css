@@ -17,3 +17,7 @@ table tr td{
 .this-month{
   cursor: pointer;
 }
+
+.active-event{
+  background-color: #FFF176;
+}

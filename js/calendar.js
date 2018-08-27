@@ -4,6 +4,10 @@ class Calendar {
     this.year = year;
   }
 
+  get currentMonth(){
+    return this.month;
+  }
+
   get months(){
       return ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   }
@@ -71,6 +75,14 @@ class Calendar {
   }
 
   printData(){
+    let tbl = document.querySelectorAll("#calendar-body td");
+    tbl.forEach(function(td){
+      data.forEach(function(event){
+        if(td.textContent == event.day && event.month === 3 && event.year === 2018){
+          td.classList.add("active-event");
+        }
+      });
+    });
 
   }
 

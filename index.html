@@ -37,6 +37,7 @@
       let year = date.getFullYear();
       let cal = new Calendar(month,year);
       cal.showCalendar();
+      cal.printData();
       document.querySelector("#prev").addEventListener("click",function(){cal.prev()});
       document.querySelector("#next").addEventListener("click",function(){cal.next()});
       document.querySelector("#today").addEventListener("click",function(){todaysMonth()});
