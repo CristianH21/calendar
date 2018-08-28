@@ -4,6 +4,14 @@ class Calendar {
     this.year = year;
   }
 
+  get currentMonth(){
+    return this.month;
+  }
+
+  get currentYear(){
+    return this.year;
+  }
+
   get months(){
       return ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   }
@@ -21,12 +29,12 @@ class Calendar {
   }
 
   showCalendar(){
-    let firstDay = (new Date(this.year,this.month)).getDay();
+    let firstDay = (new Date(this.year,this.currentMonth)).getDay();
     let prevMonth = this.month - 1;
     let prevMonthFirstDay = this.daysInMonth(prevMonth, this.year);
 
     let fecha = document.querySelector(".fecha");
-    fecha.innerHTML = this.months[this.month]+ ", "+this.year;
+    fecha.innerHTML = this.months[this.month]+ ", "+this.currentYear;
 
     //body of the table
     let tbl = document.querySelector("#calendar-body");
@@ -68,21 +76,6 @@ class Calendar {
       }
       tbl.appendChild(row);
     }
-    this.printData();
-  }
-
-  printData(){
-    let tbl = document.querySelectorAll("#calendar-body td");
-    let month = this.month;
-    let year = this.year;
-    tbl.forEach(function(td){
-      data.forEach(function(event){
-        if(td.textContent == event.day && event.month == month+1 && event.year == year){
-          td.classList.add("active-event");
-        }
-      });
-    });
-
   }
 
   daysInMonth(iMonth, iYear){
